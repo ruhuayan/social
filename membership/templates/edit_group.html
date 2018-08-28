@@ -1,0 +1,63 @@
+{% extends "base_profile.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Profile{% endblock %}
+
+{% block contRight %}
+        <div class="col-sm-9" style="border: solid 1px #999; ">
+            {% if msg %}
+            <div class="alert alert-danger ">
+                    <p><strong>{{ msg }}</strong></p>
+            </div>
+            {% else %}
+
+            <h3>Group: {{ groupName }}</h3>
+            {% if members %}
+            <table class="table">
+                <thead><tr><th>Members</th><th>Date Joined</th><th>Role</th><th></th></tr></thead>
+                {% for member in members %}
+
+                <tr><td>{{ member.username}}</td><td>{{ member.joined_at }}</td><td>
+
+                </td><td>
+
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </table>
+            <h3>Send a Message:</h3>
+            <form action="" method="post" >
+                 {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="members">To: </label>
+                    <select class="selectpicker form-control" id="members" name="members" multiple>
+                        <option value="All" selected>Select All</option>
+                        {% for member in members %}
+                        <option value="{{ member.username}}">{{member.username}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="title">Title: </label>
+                    <input type="text" class="form-control" name="title" id= 'title' placeholder="Group '{{groupName}}' Message" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="content">Content:</label>
+                    <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+            {% else %}
+                <p><strong>There is no member in the group</strong>, <a href="/social/add/group/">To invite users</a> </p>
+            {% endif %}
+
+            {% endif %}
+
+
+        </div>
+{% endblock %}

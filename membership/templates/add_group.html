@@ -1,0 +1,34 @@
+{% extends "base_profile.html" %}
+{% load bootstrap3 %}
+
+{% block title %}create a Group{% endblock %}
+
+{% block contRight %}
+
+        <div class="col-sm-9" style="border: solid 1px #999; height:300px;">
+             {% if msg %}
+            <div class="alert alert-danger ">
+                    <p><strong>{{ msg }}</strong></p>
+            </div>
+            {% endif %}
+
+            {% if msgType %}
+            <a href="/social/add/users/{{ groupName }}"> Send an invitation to User to join the group</a>
+
+            {% else %}
+            <h3>Create a Group:</h3>
+             <form action="" method="post">
+                  {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Group Name: </label>
+                    <input type="name" class="form-control" name="name" id= 'name' placeholder="Group_Name">
+                </div>
+                 <div class="form-group">
+                     <label for="description">Description: </label>
+                     <textarea class="form-control" name="description" id="description" placeholder="Description"></textarea>
+                 </div>
+                 <button type="submit" class="btn btn-default">Add</button>
+            </form>
+            {% endif %}
+        </div>
+{% endblock %}

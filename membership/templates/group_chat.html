@@ -1,0 +1,112 @@
+{% extends "base_profile.html" %}
+{% load bootstrap3 %}
+{% block title %}Multichat{% endblock %}
+
+{% block contRight %}
+  {% load staticfiles %}
+ <div class="col-sm-7" style="">
+  <h1>Group Chat: {{ sgroup.name }}</h1>
+  <!--<p class="quiet">
+    Anyone with this URL can join the room and chat:
+    <code>{{ request.scheme }}://{{ request.get_host }}/chat/{{ sgroup.name}}</code>
+  </p>-->
+
+  <form id="chatform">
+    <table id="chat">
+      <tbody>
+        {% for message in chats %}
+          <tr>
+            <td style="padding-right:20px; font-weight: bold; color: red;">{{ message.handle }}:</td>
+            <td style="width:200px;">{{ message.message }}</td>
+            <td style="">{{ message.formatted_timestamp }}</td>
+          </tr> 
+        {% endfor %}
+      </tbody></table>
+    <table style="margin-top: 20px;">
+      <tfoot>
+      <tr><td>
+          <label for="handle">Your name:</label>
+      </td ><td colspan='2'>
+          <input id="handle" type="text" placeholder="handle" value="{{request.user}}"  disabled>
+      </td></tr>
+      <tr>
+        <td>Say:</td>
+        <td colspan=2>
+          <input id="message" type="text" placeholder="message">
+          <button type="submit" id="go">Send</button>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </form>
+
+</div>
+<div class="col-sm-2" style="">
+  <ul class="list-group">
+    <li class="list-group-item member">{{ creator }}</li>
+    {% for member in members %}
+    <li class="list-group-item member">{{ member }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+  <!--<script type="text/javascript" src='{% static "jquery-1.12.1.min.js" %}'></script>-->
+  <!--<script type="text/javascript" src='{% static "reconnecting-websocket.min.js" %}'></script>-->
+  <!--<script type="text/javascript" src='{% static "chat.js" %}'></script>-->
+<script>
+
+var user =  '{{ request.user }}';
+var group = '{{ sgroup.name}}';
+
+socket = new WebSocket("ws://" + window.location.host + "/chat/"+group+"/"+user);
+//alert( 'ws://' + window.location.host + window.location.pathname);
+
+socket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    if( data.members_on) {
+        $('li.member').each(function(index){
+            if($.inArray($(this).text(), data.members_on)>=0) {
+              $(this).css('color', 'red');
+            }else $(this).css('color', 'black');
+        } );
+        return;
+    }
+    //alert(data.message);
+    var chat = $("#chat")
+        var ele = $('<tr></tr>')
+        ele.append(
+            $("<td style='padding-right:20px; font-weight: bold; color: red;'></td>").text(data.handle)
+        );
+        ele.append(
+            $("<td></td>").text(data.message)
+        );
+        ele.append(
+            $("<td></td>").text(data.timestamp)
+        );
+        chat.append(ele)
+}
+socket.onopen = function() {
+    //socket.send(JSON.stringify({group: group, handle: user, status: "in", message: ''}));
+}
+socket.onclose = function(evt) {
+    //socket.send(JSON.stringify({group: group, handle: user, status: "out", message: ''}));
+};
+$("#chatform").on("submit", function(event) {
+        event.preventDefault();
+        var msg = $('#message').val().trim();
+        if(msg=='') {alert('Enter Message !!!'); return;}
+        var message = {
+            group: group,
+            handle: $('#handle').val(),
+            message: msg,
+        }
+        socket.send(JSON.stringify(message));
+        $("#message").val('').focus();
+        return false;
+});
+
+// Call onopen directly if socket is already open
+if (socket.readyState == WebSocket.OPEN) socket.onopen();
+</script>
+
+{% endblock %}

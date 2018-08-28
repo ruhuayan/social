@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}social.com{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-3">
+
+            Log in form
+
+        </div>
+        <div class="col-sm-9" style="background-color:lavenderblush; height:300px;">
+            Tweets: <br />
+            <table class="table">
+                <thead><tr><th>User</th><th>Wrote at</th><th>Tweet</th><th>Edit</th><th>Comment</th></tr></thead>
+                {% for t in tweets %}
+                <tr><td>{{ t.user}}</td><td>{{t.created_at}}</td><td>{{t.text}}</td><td>
+                    <a href="/poster/edit/{{ t.id }}">Edit</a></td><td><a href="/poster/tweet/{{t.id}}" >Comment</a></td>
+                </tr>
+                {% endfor %}
+
+            </table>
+
+
+        </div>
+
+    </div>
+
+
+
+</div>
+{% endblock %}

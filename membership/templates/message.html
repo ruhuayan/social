@@ -1,0 +1,43 @@
+{% extends "base_profile.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Profile{% endblock %}
+
+{% block contRight %}
+        <div class="col-sm-9" style="border: solid 1px #999;">
+
+             <h3> Message:</h3>
+            {% if msgs %}
+            <table  class="table table-hover">
+                <thead><tr><th>title</th><th>from</th><th>Date Sent</th><th></th><th></th></tr></thead>
+                {% for m in msgs %}
+                <tr><td><a href="/social/message/{{m.id}}">{{ m.title}}</a></td><td>{{m.user}}</td><td>{{m.sent_at}}</td><td>
+                   </td><td></td>
+                </tr>
+                {% endfor %}
+
+            </table>
+            {% elif msg %}
+            <p style=""><strong>From</strong> {{msg.user}}&ensp; &emsp14; <strong>To</strong> {{ users }} <span class="pull-right" style="font-size: 10px; "> {{msg.sent_at}} </span> </p>
+             <div class="panel panel-default">
+                 <div class="panel-body">{{msg.content}}</div>
+                 <div class="panel-footer btn-reply" style="padding: 0;"><button type="button" class="btn btn-default" onclick="reply()">Reply</button></div>
+             </div>
+
+            <div class="panel panel-default panel-reply" style="padding: 0; visibility: hidden;">
+                <div class="panel-heading">Response Message: </div>
+                <div class="panel-body" style="padding: 0; "><textarea style="width: 100%;" rows="10"></textarea></div>
+                <div class="panel-footer" style="padding: 0;"><button type="button" class="btn btn-default">Send</button></div>
+            </div>
+            {% endif %}
+        </div>
+<script>
+
+    function reply(){
+
+        $('.panel-reply').css('visibility', 'visible');
+        $('.btn-reply').remove();
+    }
+
+</script>
+{% endblock %}

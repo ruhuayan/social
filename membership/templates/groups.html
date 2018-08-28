@@ -1,0 +1,40 @@
+{% extends "base_profile.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Profile{% endblock %}
+
+{% block contRight %}
+        <div class="col-sm-9" style="border: solid 1px #999; height:300px;">
+
+            <h3>Social Group you Created:</h3>
+            {% if sgroup %}
+            <table class="table">
+                <thead><tr><th>Group Name</th><th>Date Created</th><th>Edit</th><th>Invite</th><th>Delete</th></tr></thead>
+                {% for sg in sgroup %}
+
+                <tr><td>{{ sg.name}}</td><td>{{ sg.created_at }}</td><td>
+                    <a href="/social/edit/{{sg.name }}">Edit</a>
+                </td><td>
+                    <a href="/social/add/users/{{ sg.name}}"> Invite</a>
+                    </td><td><a href="/social/delete/{{sg.name}}">Delete</a> </td>
+                </tr>
+                {% endfor %}
+
+            </table>
+            {% else %}
+                <p><strong>You created has not a group</strong>, <a href="/social/add/group/">To create a group</a> </p>
+            {% endif %}
+             <h3> Groups you joined:</h3>
+            {% if memberships %}
+            <table class="table">
+                <thead><tr><th>Group Name</th><th>Creator</th><th>Date joined</th><th>Edit</th><th></th></tr></thead>
+                {% for m in memberships %}
+                <tr><td>{{ m.sgroup.name }}</td><td>{{ m.sgroup.creator }}</td><td>{{ m.joined_at}}</td><td><a href="/social/membership/{{m.sgroup.name}}">edit</a>
+                   </td><td></td>
+                </tr>
+                {% endfor %}
+
+            </table>
+            {% endif %}
+        </div>
+{% endblock %}

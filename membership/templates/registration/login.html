@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Sign in{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <a data-toggle="collapse" href='#collapse-profile' style="color: #fff;" ><h2>Sign in</h2></a>
+                    </div>
+                    <div id="collapse-profile" class="panel collapse collapse in">
+                        <div class="panel-body">
+
+            {% if form.errors %}
+
+            <div class="alert alert-danger ">
+                    <p><strong>Login failed. Try again...</strong></p>
+            </div>
+
+            {% endif %}
+            <form action="{% url 'django.contrib.auth.views.login' %}" method="post" role="form">
+            {% csrf_token %}
+
+            {% bootstrap_field form.username %}
+            {% bootstrap_field form.password %}
+            {% if next %}
+            <input type="hidden" name="next" value="{{ next }}" />
+            {% else %}
+            <input type="hidden" name="next" value="/index" />
+            {% endif %}
+            {% buttons %}
+            <div class="col-sm-offset-1 ">
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Login
+            </button>
+            </div>
+            {% endbuttons %}
+            </form>
+
+            <div class="">
+                <p>Not yet registered?
+                <a href="{% url 'registration_register' %}">Register now for free!</a></p>
+                <p>Trouble signing in?
+                <a href="{% url 'django.contrib.auth.views.password_reset' %}">Reset password.</a></p>
+            </div>
+
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="col-sm-9" style=" height: 600px; border: solid 1px #999;"><h1>Website Introduction</h1></div>
+    </div>
+
+
+</div>
+{% endblock %}

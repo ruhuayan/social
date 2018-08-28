@@ -1,0 +1,40 @@
+{% extends "base_profile.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Profile{% endblock %}
+
+{% block contRight %}
+        <div class="col-sm-9" style="border: solid 1px #999;">
+
+            <h3>Invitation:</h3>
+            {% if invites %}
+            <table  class="table table-hover">
+                <thead><tr><th>Group</th><th>Group Manager</th><th>Date Sent</th><th>Accept</th><th>Reject</th></tr></thead>
+                {% for invite in invites %}
+
+                <tr><td>{{ invite.socialgroup }}</td><td><strong>{{invite.manager}}</strong> invite you to join the group {{invite.group}}</td><td>{{invite.sent_at}}</td><td>
+
+                    <a href="/social/confirm/{{ invite.id }}/1">Acceipt</a></td><td><a href="/social/confirm/{{ invite.id}}/0" >Reject</a></td>
+                </tr>
+                {% endfor %}
+
+            </table>
+            {% else %}
+             <p><strong>You have no invitation</strong> </p>
+            {% endif %}
+             <h3> Message:</h3>
+            {% if msg %}
+            <table  class="table table-hover">
+                <thead><tr><th>title</th><th>from</th><th>Date Sent</th><th></th><th></th></tr></thead>
+                {% for m in msg %}
+                <tr><td><a href="/social/message/{{m.id}}">{{ m.title}}</a></td><td>{{m.user}}</td><td>{{m.sent_at}}</td><td>
+                   </td><td></td>
+                </tr>
+                {% endfor %}
+
+            </table>
+            {% else %}
+             <p><strong>You have no Messages</strong> </p>
+            {% endif %}
+        </div>
+{% endblock %}

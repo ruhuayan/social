@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+    <!--<div id="content">-->
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-3" style="">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <a data-toggle="collapse" href='#collapse-profile' style="color: #fff;" >Profile</a>
+                    </div>
+                    <div id="collapse-profile" class="panel collapse collapse in">
+                        <div class="panel-body">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li ><a href="#">{{ request.user }}</a></li>
+                                <li><a href="#">{{ request.user.email }}</a></li>
+                                <li><a href="#">Edit profile</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <a data-toggle="collapse" href='#collapse-network' style="color: #fff;" >Networks</a>
+                    </div>
+                    <div id="collapse-network" class="panel collapse collapse in">
+                        <div class="panel-body">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li ><a href="/social/profile">Home</a></li>
+                                <li><a href="/social/message">Message</a></li>
+                                <li><a href="/social/group">Group</a></li>
+                                <li><a href="/social/add/group">Create a Group</a></li>
+                                <li><a href="#">Friends</a> </li>
+                                <li><a href="#">Files</a> </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% block contRight %}{% endblock %}
+    </div>
+</div>
+<!--</div>-->
+{% endblock %}

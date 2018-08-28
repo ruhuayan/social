@@ -1,0 +1,24 @@
+{% extends "base_profile.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Profile{% endblock %}
+
+{% block contRight %}
+        <div class="col-sm-9" style="border: solid 1px #999; ">
+            {% if msg %}
+            <div class="alert alert-danger ">
+                    <p><strong>{{ msg }}</strong></p>
+            </div>
+            {% else %}
+
+            <h3>Group: {{ group.name }}</h3>
+            <p>Description: </p>
+            <p>{{ group.description }}</p>
+            <p> <a href="/social/signout/{{group.name}}/">Sign out</a> </p>
+
+
+            {% endif %}
+
+
+        </div>
+{% endblock %}

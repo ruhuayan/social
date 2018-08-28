@@ -1,0 +1,14 @@
+{% extends "base_profile.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Confirm the invitation{% endblock %}
+
+{% block contRight %}
+        <div class="col-sm-9" style="border: solid 1px #999; height:300px;">
+             {% if msg %}
+            <div class="alert alert-danger ">
+                    <p><strong>{{ msg }}</strong></p>
+            </div>
+            {% endif %}
+        </div>
+{% endblock %}
