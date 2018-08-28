@@ -1,10 +1,11 @@
 Working Environment: 
+
 Framework: Python Django 1.9
 OS: Ubuntu 16.04  ( Linux )
-Editor: Pycharm-community
 Database: MySql
 
 1 Configuration (settings.py): 
+
 There are a few things that I added in the settings.py file for the project to work: 
 
  INSTALLED_APPS = (
